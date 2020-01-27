@@ -7,6 +7,8 @@ class AtomLink {
   final String hreflang;
   final String title;
   final int length;
+  final int width;
+  final int height;
 
   AtomLink(
     this.href,
@@ -15,6 +17,8 @@ class AtomLink {
     this.hreflang,
     this.title,
     this.length,
+    this.width,
+      this.height,
   );
 
   factory AtomLink.parse(XmlElement element) {
@@ -27,6 +31,17 @@ class AtomLink {
     if (element.getAttribute("length") != null) {
       length = int.parse(element.getAttribute("length"));
     }
-    return AtomLink(href, rel, type, hreflang, title, length);
+    var width;
+    var temp = element.getAttribute('media:width');
+    if(temp!= null){
+      width = int.parse(temp);
+    }
+    var height;
+    temp = element.getAttribute('media:height');
+    if(temp!= null){
+      height = int.parse(temp);
+    }
+
+    return AtomLink(href, rel, type, hreflang, title, length, width, height);
   }
 }
